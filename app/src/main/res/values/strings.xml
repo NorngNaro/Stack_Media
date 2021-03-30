@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Stack</string>
+
+    <string name="title">A holiday at KEP Province</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="save">Save</string>
+    <string name="username">Username</string>
+    <string name="bio">Bio</string>
+    <string name="email">Email</string>
+    <string name="this_is_your_profile">This is your profile!</string>
+    <string name="note">Note: All your information is private. No one can see your information what you have save to Blog.Only you can delete or change it.</string>
+    <string name="profile">Profile</string>
+    <string name="click_image">Click this Image to add New Image</string>
+    <string name="enter_title">Enter title</string>
+    <string name="enter_description">Write description</string>
+    <string name="create_post">Create Post</string>
+    <string name="published_date">Published Date :</string>
+    <string name="welcome">Welcome to Stack.</string>
+    <string name="show_what_you_want_to_show">Show what you want to show</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="or">Or</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="don_t_have_account_yet">Do not have an account yet?</string>
+    <string name="account">Account</string>
+    <string name="edit_account">Edit profile</string>
+    <string name="premium">Premium</string>
+    <string name="general">General</string>
+    <string name="app_rotation_lock">App rotation Lock</string>
+    <string name="rotate">When enabled, a lock button will appear in the center of the screen after rotating your device.</string>
+    <string name="quick_save_actions">Quick Save Actions</string>
+    <string name="quick_save">When saving to Blog From another app, briefly display action, and tap again.</string>
+    <string name="log_out">Log Out</string>
+    <string name="setting">Setting</string>
+    <string name="blog"> Blogger often write from a personal perspective that allows them to connect directly with their readers. In addition, most blogs also have a “comments” section where visitors can correspond with the blogger. Interacting with your visitors in the comments section helps to further the connection between the blogger and the reader.
+</string>
+    <string name="post">Post</string>
+    <string name="phone">phone</string>
+</resources>

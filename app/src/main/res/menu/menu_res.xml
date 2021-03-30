@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/discover"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/my_blog"
+        android:icon="@drawable/ic_baseline_auto_awesome_motion_24"
+        android:title="My Post"/>
+
+    <item
+        android:id="@+id/page_none"
+        android:enabled="true"
+        android:title=""/>
+
+    <item
+        android:id="@+id/setting"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="Setting"/>
+
+    <item
+        android:id="@+id/account"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Account"/>
+
+
+</menu>
