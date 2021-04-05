@@ -126,17 +126,24 @@ public class ListHomeActivity extends FirestoreRecyclerAdapter<PostModel , ListH
                     if(!click){
                         love.setImageResource(R.drawable.heart);
                         click = true;
+
+
+
+
+                        int position = getAdapterPosition();
+
+                        Log.e("TAG", "onClick: "+ getSnapshots().getSnapshot(position) );
+
+//                        if(position != RecyclerView.NO_POSITION && btn_love != null)
+//                            btn_love.onItemClick(getSnapshots().getSnapshot(position),position);
+
+                        Log.e("TAG", "onClick: "+ click );
+                        Log.e("TAG", "onClick: "+ position );
+
                     }else {
                         love.setImageResource(R.drawable.heartnew);
                         click = false;
                     }
-
-                    int position = getAdapterPosition();
-                    if(position != RecyclerView.NO_POSITION && btn_love != null)
-                        btn_love.onItemClick(getSnapshots().getSnapshot(position),position);
-
-                    Log.e("TAG", "onClick: "+ click );
-                    Log.e("TAG", "onClick: "+ position );
 
                 }
             });
@@ -162,13 +169,6 @@ public class ListHomeActivity extends FirestoreRecyclerAdapter<PostModel , ListH
     }
 
 
-
-
-    private void addlove(){
-
-        //assssffd
-
-    }
 
 
 

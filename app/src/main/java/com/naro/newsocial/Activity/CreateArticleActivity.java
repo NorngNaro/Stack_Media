@@ -327,6 +327,7 @@ public class CreateArticleActivity extends AppCompatActivity {
                 .setMessage(message)
                 .show();
     }
+
 }
 
 

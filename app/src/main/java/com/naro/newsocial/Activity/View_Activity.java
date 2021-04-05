@@ -1,6 +1,9 @@
 package com.naro.newsocial.Activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +13,7 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,10 +22,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.naro.newsocial.Model.PostModel;
 import com.naro.newsocial.Model.UserModel;
 import com.naro.newsocial.R;
 import com.naro.newsocial.databinding.ActivityViewBinding;
+import com.naro.newsocial.fragmentActivity.Myblog_Activity;
+
 import static com.facebook.GraphRequest.TAG;
 
 
@@ -29,7 +37,9 @@ public class View_Activity extends Activity {
         private ActivityViewBinding binding;
         private PostModel postModel;
         private UserModel userModel;
-        FirebaseFirestore dbFireStore = FirebaseFirestore.getInstance();
+        private String postID;
+        private String url;
+    FirebaseFirestore dbFireStore = FirebaseFirestore.getInstance();
 
 
         @Override
@@ -39,8 +49,17 @@ public class View_Activity extends Activity {
             View view = binding.getRoot();
             setContentView(view);
 
-            String postID = getIntent().getStringExtra("postID");
+            postID = getIntent().getStringExtra("postID");
+
             postQuery(postID);
+
+            // On action edit post
+
+            editClick(postID);
+
+            // On delete click
+
+            deleteClick(postID);
 
             binding.btnBack.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -50,12 +69,98 @@ public class View_Activity extends Activity {
             });
             binding.progressBar.setVisibility(View.VISIBLE);
 
+        }
+
+        private void editClick( String PostID){
+
+            binding.btnViewEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(View_Activity.this, CreateArticleActivity.class);
+                    intent.putExtra("postID", postID);
+                    intent.putExtra("action", "Edit");
+                    startActivity(intent);
+
+                }
+            });
+
+        }
+
+        private void deleteClick(String postID){
+
+            binding.btnViewDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Myblog_Activity myblog_activity = new Myblog_Activity();
+
+                    new AlertDialog.Builder(View_Activity.this)
+                            .setTitle("Delete this post?")
+                            .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                  //  postQuery(documentSnapshot.getId(),position);
+
+                                    deleteImage(url);
+                                    deletePost(postID);
+                                    finish();
+
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setCancelable(true)
+                            .show();
+
+                }
+            });
 
         }
 
 
+    private void deleteImage(String imageUrl){
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        StorageReference storageReference = firebaseStorage.getReferenceFromUrl(imageUrl);
+        Log.e(TAG, "deleteImage: "+imageUrl );
+        storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.e("Picture","#deleted");
+            }
+        });
+    }
 
-        private void postQuery(String postID){
+    private void deletePost(String postID){
+        FirebaseFirestore dbFireStore = FirebaseFirestore.getInstance();
+        CollectionReference dbPost = dbFireStore.collection("Post");
+
+        dbPost
+                .document(postID)
+                .delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+
+                            Toast.makeText(View_Activity.this, "Post Deleted", Toast.LENGTH_SHORT).show();
+
+                        }else {
+
+                            Toast.makeText(View_Activity.this, "Post Can Not Delete", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+                });
+    }
+
+
+
+    private void postQuery(String postID){
             CollectionReference dbView = dbFireStore.collection("Post");
 
             dbView
@@ -73,6 +178,7 @@ public class View_Activity extends Activity {
 
                                 binding.date.setText(postModel.getDate());
                                 binding.text.setText(postModel.getDescription());
+                                url = postModel.getUrl();
                                 Glide.with(View_Activity.this)
                                         .load(postModel.getUrl())
                                         .into(binding.imageView);
@@ -110,8 +216,6 @@ public class View_Activity extends Activity {
 
                     }
                 });
-
-
     }
 
 
@@ -125,11 +229,13 @@ public class View_Activity extends Activity {
                 binding.btnViewDelete.setVisibility(View.INVISIBLE);
                 binding.btnViewEdit.setVisibility(View.INVISIBLE);
             }
-
     }
 
 
-
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        postQuery(postID);
     }
+}
 

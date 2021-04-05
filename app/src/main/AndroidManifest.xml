@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewSocial">
-        <activity android:name=".Activity.CreateArticleActivity"/>
-        <activity android:name=".Activity.Discover_view_Activity"/>
-        <activity android:name=".Activity.Edit_profile_Activity"/>
-        <activity android:name=".Activity.View_Activity"/>
+        <activity android:name=".Comment_Activity"></activity>
+        <activity android:name=".Activity.CreateArticleActivity" />
+        <activity android:name=".Activity.Discover_view_Activity" />
+        <activity android:name=".Activity.Edit_profile_Activity" />
+        <activity android:name=".Activity.View_Activity" />
         <activity android:name=".Activity.Flash_screen_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,13 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.Home_Activity">
-
-        </activity>
-        <activity android:name=".Activity.Sign_up_Activity"/>
-        <activity android:name=".Activity.Sign_in_Activity">
-
-        </activity>
+        <activity android:name=".Activity.Home_Activity"></activity>
+        <activity android:name=".Activity.Sign_up_Activity" />
+        <activity android:name=".Activity.Sign_in_Activity"></activity>
     </application>
 
 </manifest>

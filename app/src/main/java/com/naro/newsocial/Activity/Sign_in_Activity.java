@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -173,7 +174,10 @@ public class Sign_in_Activity extends AppCompatActivity {
         CollectionReference dbSignIn = dbFireStoreUser.collection("User");
 
 
-                String username = user.getDisplayName();
+
+
+
+        String username = user.getDisplayName();
                 String email = user.getEmail();
                 String phone = user.getPhoneNumber();
                 if (phone == null){
@@ -186,42 +190,58 @@ public class Sign_in_Activity extends AppCompatActivity {
 
                  UserModel userModel = new UserModel(username,email,phone,imageUrl,userID,bio);
 
-                dbSignIn
-                        .whereEqualTo("userID",userID)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                               if (task.isSuccessful()){
-                                   for (QueryDocumentSnapshot documentSnapshots : task.getResult()){
-                                       Log.d(TAG, documentSnapshots.getId() +"=>"+ documentSnapshots.getData());
-                                       Log.d(TAG, "This user is already have in data base");
-                                        newUser = false;
-                                   }
-                               }else {
-                                   Log.e(TAG, "This user is already not have in data base");
 
-                               }
+        dbSignIn
+                .whereEqualTo("userID", user.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
 
+                            for (DocumentSnapshot snapshot : task.getResult()){
+                                Log.e(TAG, "Data"+snapshot.getData() );
+                                newUser = false;
                             }
-                        });
+
+                            Log.e(TAG, "After query: " + newUser );
+                            if(newUser){
+                                createDatabase(userModel,user,dbSignIn);
+                            }
 
 
-                if(!newUser){
-                    dbSignIn.add(userModel)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Toast.makeText(Sign_in_Activity.this, "You have SignIn as " + username , Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(Sign_in_Activity.this, "Have something went wrong! " , Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                }
+                        }else {
+                            Log.e(TAG, "This user is already not have in data base");
+
+                        }
+
+                    }
+                });
+
+
+                   Log.e(TAG, "createUser down: "+ newUser );
+
+
+
+
+    }
+
+
+    private void createDatabase( UserModel userModel , FirebaseUser firebaseUser , CollectionReference dbSignIn){
+
+            dbSignIn.add(userModel)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Toast.makeText(Sign_in_Activity.this, "You have SignIn as " + firebaseUser.getDisplayName() , Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(Sign_in_Activity.this, "Have something went wrong! " , Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
 
 

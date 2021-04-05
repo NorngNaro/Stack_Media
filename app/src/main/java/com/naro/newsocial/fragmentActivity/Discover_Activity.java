@@ -2,6 +2,7 @@ package com.naro.newsocial.fragmentActivity;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,17 +23,24 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.naro.newsocial.Activity.Sign_in_Activity;
 import com.naro.newsocial.Activity.View_Activity;
 import com.naro.newsocial.Adapter.ListHomeActivity;
+import com.naro.newsocial.Model.LoveModel;
 import com.naro.newsocial.Model.PostModel;
 import com.naro.newsocial.R;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
@@ -38,6 +48,7 @@ public class Discover_Activity extends Fragment {
 
 
     private ListHomeActivity listHomeActivity;
+    private LoveModel loveModel;
 
     private View discover;
     private ArrayList<PostModel> postList;
@@ -126,9 +137,10 @@ public class Discover_Activity extends Fragment {
 
 
         listHomeActivity.setOnLoveClickListener(new ListHomeActivity.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-
+                    addLove(documentSnapshot.getId());
             }
 
             @Override
@@ -136,6 +148,37 @@ public class Discover_Activity extends Fragment {
 
             }
         });
+
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void addLove(String postID){
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        FirebaseFirestore dbPost = FirebaseFirestore.getInstance();
+        CollectionReference dbAllPost = dbPost.collection("Post").document(postID).collection("love");
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        LocalDateTime now = LocalDateTime.now();
+
+         loveModel = new LoveModel(user.getUid(),dtf.format(now));
+
+        dbAllPost.add(loveModel)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getContext(), "Loved" , Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Have something went wrong! " , Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
     }
 
