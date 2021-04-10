@@ -4,14 +4,19 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -29,6 +34,11 @@ import com.naro.newsocial.Model.UserModel;
 import com.naro.newsocial.R;
 import com.naro.newsocial.databinding.ActivityViewBinding;
 import com.naro.newsocial.fragmentActivity.Myblog_Activity;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import static com.facebook.GraphRequest.TAG;
 
@@ -49,6 +59,9 @@ public class View_Activity extends Activity {
             View view = binding.getRoot();
             setContentView(view);
 
+
+
+
             postID = getIntent().getStringExtra("postID");
 
             postQuery(postID);
@@ -61,6 +74,11 @@ public class View_Activity extends Activity {
 
             deleteClick(postID);
 
+            imageClick();
+
+
+
+
             binding.btnBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -70,6 +88,24 @@ public class View_Activity extends Activity {
             binding.progressBar.setVisibility(View.VISIBLE);
 
         }
+
+
+    private void imageClick(){
+        binding.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent =  new Intent(View_Activity.this , ImageView_Activity.class);
+                intent.putExtra("ImageUrl", postModel.getUrl());
+                Log.e(TAG, "onClick: URL" + postModel.getUrl() );
+                startActivity(intent);
+
+            }
+        });
+    }
+
+
+
 
         private void editClick( String PostID){
 
@@ -86,6 +122,8 @@ public class View_Activity extends Activity {
             });
 
         }
+
+
 
         private void deleteClick(String postID){
 
@@ -133,6 +171,8 @@ public class View_Activity extends Activity {
             }
         });
     }
+
+
 
     private void deletePost(String postID){
         FirebaseFirestore dbFireStore = FirebaseFirestore.getInstance();
@@ -182,6 +222,8 @@ public class View_Activity extends Activity {
                                 Glide.with(View_Activity.this)
                                         .load(postModel.getUrl())
                                         .into(binding.imageView);
+
+
                             }else {
                                 Log.e(TAG, "onComplete: Not Work" );
                                 Toast.makeText(View_Activity.this, "Have something error!", Toast.LENGTH_SHORT).show();
@@ -189,6 +231,7 @@ public class View_Activity extends Activity {
                         }
                     });
         }
+
 
     private void userQuery(){
         CollectionReference dbUser = dbFireStore.collection("User");

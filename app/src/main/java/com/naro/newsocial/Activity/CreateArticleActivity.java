@@ -57,6 +57,7 @@ public class CreateArticleActivity extends AppCompatActivity {
     private String postID;
     private PostModel postModel;
     private String message;
+    private boolean imageEdit = false;
 
 
 
@@ -130,7 +131,6 @@ public class CreateArticleActivity extends AppCompatActivity {
                 if(title && description){
 
                     if(edit.equals("Edit")){
-                        deleteImage();
                         imageUpload();
                         update(postID);
                     }else {
@@ -201,13 +201,23 @@ public class CreateArticleActivity extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
      }
 
+
+
     private void imageUpload(){
 
       //  binding.progressBar.setVisibility(View.VISIBLE);
+
         dialog();
 
-        if(edit.equals("Edit")){
-            url = postModel.getUrl();
+
+        Log.e(TAG, "imageUpload: "+ imageEdit );
+        Log.e(TAG, "imageUpload: "+ edit );
+
+        if(edit.equals("Edit") && imageEdit == false){
+
+                Log.e(TAG, "imageUpload: work " );
+                url = postModel.getUrl();
+
         }else {
             if (imageUri != null){
                 StorageReference storeRef = FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis() + "." + getFile(imageUri));
@@ -232,6 +242,7 @@ public class CreateArticleActivity extends AppCompatActivity {
 
 
     }
+
 
     private void update (String postID){
 
@@ -260,6 +271,7 @@ public class CreateArticleActivity extends AppCompatActivity {
                 });
 
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void uploadData(){
@@ -315,6 +327,13 @@ public class CreateArticleActivity extends AppCompatActivity {
             imageUri = data.getData();
             binding.imageArticle.setImageURI(imageUri);
             Log.e("TAG", "onActivityResult: work "+ imageUri);
+
+            if(edit.equals("Edit")) {
+                deleteImage();
+                Log.e(TAG, "onActivityResult: delete image" );
+                imageEdit = true;
+            }
+
         }
 
     }

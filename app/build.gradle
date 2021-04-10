@@ -36,6 +36,11 @@ android {
 
 dependencies {
 
+
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+
+    implementation 'com.zolad:zoominimageview:1.0.0'
+
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:26.8.0')
 

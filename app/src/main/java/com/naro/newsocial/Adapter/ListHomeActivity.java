@@ -73,6 +73,14 @@ public class ListHomeActivity extends FirestoreRecyclerAdapter<PostModel , ListH
                                         .into(homeHolder.picUser);
                                 homeHolder.writer.setText(userModel.getUserName());
 
+
+                                // Set view to list
+                                homeHolder.title.setText(postModel.getTitle());
+                                homeHolder.date.setText(postModel.getDate());
+                                Glide.with(homeHolder.itemView.getContext())
+                                        .load(postModel.getUrl())
+                                        .into(homeHolder.imageView);
+
                             }
                         }else {
                             Log.e("TAG", "Have something wrong");
@@ -82,12 +90,7 @@ public class ListHomeActivity extends FirestoreRecyclerAdapter<PostModel , ListH
                     }
                 });
 
-        // Set view to list
-        homeHolder.title.setText(postModel.getTitle());
-        homeHolder.date.setText(postModel.getDate());
-        Glide.with(homeHolder.itemView.getContext())
-                .load(postModel.getUrl())
-                .into(homeHolder.imageView);
+
 
     }
 

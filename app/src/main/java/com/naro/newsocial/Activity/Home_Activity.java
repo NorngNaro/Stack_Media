@@ -15,7 +15,7 @@ import com.naro.newsocial.databinding.ActivityHomeBinding;
 import com.naro.newsocial.fragmentActivity.Account_Activity;
 import com.naro.newsocial.fragmentActivity.Discover_Activity;
 import com.naro.newsocial.fragmentActivity.Myblog_Activity;
-import com.naro.newsocial.fragmentActivity.Setting_activity;
+import com.naro.newsocial.fragmentActivity.Notification_activity;
 
 
 public class Home_Activity extends AppCompatActivity {
@@ -57,8 +57,8 @@ public class Home_Activity extends AppCompatActivity {
                         case R.id.discover:
                             selectedFragment = new Discover_Activity();
                             break;
-                        case R.id.setting:
-                            selectedFragment = new Setting_activity();
+                        case R.id.notification:
+                            selectedFragment = new Notification_activity();
                             break;
                         case R.id.account:
                             selectedFragment = new Account_Activity();
