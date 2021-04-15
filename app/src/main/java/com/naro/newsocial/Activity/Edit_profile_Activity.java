@@ -94,8 +94,12 @@ public class Edit_profile_Activity extends AppCompatActivity {
                 Log.e(TAG, "onClick: image FireStore "+ imageFireStore );
                 if(imageFireStore){
                     Log.e(TAG, "Save Click : have an old photo " );
-                    deleteImage(userModel.getImageUrl());
-                    imageUpload();
+                    if(imagePick == true){
+                        deleteImage(userModel.getImageUrl());
+                        imageUpload();
+                    }
+                    editData(userPostID);
+
                 }else{
                     Log.e(TAG, "Save Click : not have image photo " );
                     imageUpload();
@@ -193,10 +197,6 @@ public class Edit_profile_Activity extends AppCompatActivity {
                     }
                 });
     }
-
-
-
-
 
     private void imagePick() {
         Intent intent = new Intent();

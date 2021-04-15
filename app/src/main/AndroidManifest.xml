@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewSocial">
         <activity android:name=".Activity.ImageView_Activity"/>
-        <activity android:name=".Comment_Activity" />
+        <activity android:name=".Activity.Comment_Activity" />
         <activity android:name=".Activity.CreateArticleActivity" />
         <activity android:name=".Activity.Discover_view_Activity" />
         <activity android:name=".Activity.Edit_profile_Activity" />

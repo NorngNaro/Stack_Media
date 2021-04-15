@@ -37,6 +37,14 @@ public class Setting_Activity_new extends AppCompatActivity {
     });
 
 
+    binding.btnBack.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            finish();
+        }
+    });
+
+
         binding.logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

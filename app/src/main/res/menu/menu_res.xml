@@ -8,8 +8,8 @@
 
     <item
         android:id="@+id/my_blog"
-        android:icon="@drawable/ic_baseline_auto_awesome_motion_24"
-        android:title="My Post"/>
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="Search"/>
 
     <item
         android:id="@+id/page_none"

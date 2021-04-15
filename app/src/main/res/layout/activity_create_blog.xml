@@ -82,28 +82,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="10dp"
         android:text="@string/create_post"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_back"
         app:layout_constraintStart_toEndOf="@id/btn_back"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="@+id/btn_back" />
 
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_create"
         android:layout_width="80dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/round_border"
         android:text="@string/post"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
         android:textAllCaps="false"
         android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/text_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/text_title" />
 
 
     <ProgressBar

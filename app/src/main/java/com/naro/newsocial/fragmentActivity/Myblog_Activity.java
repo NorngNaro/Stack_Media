@@ -33,6 +33,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.naro.newsocial.Activity.CreateArticleActivity;
@@ -40,6 +42,7 @@ import com.naro.newsocial.Activity.View_Activity;
 import com.naro.newsocial.Adapter.ListAllPost;
 import com.naro.newsocial.Adapter.ListHomeActivity;
 import com.naro.newsocial.Model.PostModel;
+import com.naro.newsocial.Model.UserModel;
 import com.naro.newsocial.R;
 
 import static com.facebook.GraphRequest.TAG;
@@ -53,6 +56,8 @@ public class Myblog_Activity extends Fragment  {
     private ProgressBar loading;
     private SwipeRefreshLayout swipeRefreshLayout;
     private PostModel postModel;
+    private UserModel userModel;
+    private   AppCompatImageView profile;
 
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -63,10 +68,9 @@ public class Myblog_Activity extends Fragment  {
         loading = myBlog.findViewById(R.id.progressBar);
         swipeRefreshLayout = myBlog.findViewById(R.id.swipe);
 
-        AppCompatImageView profile = myBlog.findViewById(R.id.pic_user);
-        Glide.with(myBlog)
-                .load(user.getPhotoUrl())
-                .into(profile);
+        profile = myBlog.findViewById(R.id.pic_user);
+
+        userQuery(user.getUid());
 
         setUpRecyclerView();
 
@@ -83,6 +87,40 @@ public class Myblog_Activity extends Fragment  {
 
 
         return myBlog;
+
+    }
+
+
+
+    private void userQuery(String userID) {
+
+        FirebaseFirestore dbFireStoreUser = FirebaseFirestore.getInstance();
+        CollectionReference dbUser = dbFireStoreUser.collection("User");
+
+        dbUser
+                .whereEqualTo("userID", userID)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+
+                                userModel = documentSnapshot.toObject(UserModel.class);
+
+                                Log.e("TAG", "onComplete: " + userModel.getUserID());
+
+                                Glide.with(myBlog)
+                                        .load(userModel.getImageUrl())
+                                        .into(profile);
+
+                            }
+                        } else {
+                            Toast.makeText(getContext(), "Have something went wrong!", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
 
     }
 

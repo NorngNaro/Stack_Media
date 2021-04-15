@@ -34,16 +34,16 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
-                android:layout_height="28dp"
+                android:layout_height="18sp"
                 android:layout_marginStart="120dp"
-                android:layout_marginTop="5dp"
-                android:paddingStart="10dp"
-                android:text="@string/title"
+                android:layout_marginEnd="40dp"
                 android:gravity="center|left"
+                android:paddingStart="10dp"
+                android:text="sdfsdf"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_view_delete"
                 app:layout_constraintStart_toEndOf="@+id/image_show"
                 app:layout_constraintTop_toTopOf="@+id/image_show"
                 tools:ignore="RtlSymmetry" />
@@ -52,8 +52,8 @@
                 android:id="@+id/txt_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 android:text="Published : "
                 app:layout_constraintStart_toEndOf="@+id/image_show"
                 app:layout_constraintTop_toBottomOf="@+id/title" />
@@ -68,15 +68,14 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/btn_view_delete"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:backgroundTint="@color/colorPrimary"
-                app:cardCornerRadius="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:cardCornerRadius="14dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="match_parent"
@@ -87,15 +86,14 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/btn_edit"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="10dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:backgroundTint="@color/colorPrimary"
-                app:cardCornerRadius="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_view_delete"
-                app:layout_constraintTop_toBottomOf="@+id/title">
+                app:cardCornerRadius="14dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_view_delete">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="match_parent"
@@ -104,6 +102,67 @@
                     android:src="@drawable/ic_baseline_edit_24" />
 
             </androidx.cardview.widget.CardView>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="0"
+                app:layout_constraintBottom_toBottomOf="@+id/image_show"
+                app:layout_constraintStart_toEndOf="@+id/image_show" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Loves"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView"
+                app:layout_constraintStart_toEndOf="@+id/appCompatTextView"
+                app:layout_constraintTop_toTopOf="@+id/appCompatTextView" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/commentShow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="0"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView"
+                app:layout_constraintStart_toEndOf="@+id/appCompatTextView7"
+                app:layout_constraintTop_toTopOf="@+id/appCompatTextView" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Comments"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView"
+                app:layout_constraintStart_toEndOf="@+id/commentShow"
+                app:layout_constraintTop_toTopOf="@+id/appCompatTextView" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/shareShow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="0"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView"
+                app:layout_constraintStart_toEndOf="@+id/appCompatTextView8"
+                app:layout_constraintTop_toTopOf="@+id/appCompatTextView" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Shares"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView"
+                app:layout_constraintStart_toEndOf="@+id/shareShow"
+                app:layout_constraintTop_toTopOf="@+id/appCompatTextView" />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

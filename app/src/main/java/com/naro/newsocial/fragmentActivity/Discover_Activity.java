@@ -23,8 +23,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -32,11 +34,14 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.naro.newsocial.Activity.Sign_in_Activity;
 import com.naro.newsocial.Activity.View_Activity;
 import com.naro.newsocial.Adapter.ListHomeActivity;
 import com.naro.newsocial.Model.LoveModel;
 import com.naro.newsocial.Model.PostModel;
+import com.naro.newsocial.Model.UserModel;
 import com.naro.newsocial.R;
 
 import java.time.LocalDateTime;
@@ -49,7 +54,7 @@ public class Discover_Activity extends Fragment {
 
     private ListHomeActivity listHomeActivity;
     private LoveModel loveModel;
-
+    private UserModel userModel;
     private View discover;
     private ArrayList<PostModel> postList;
     private SwipeRefreshLayout swipe;
@@ -73,12 +78,12 @@ public class Discover_Activity extends Fragment {
             }
         });
 
+        userQuery(user.getUid());
+
     swipeDown();
     setUpRecycler();
 
-        Glide.with(discover)
-                .load(user.getPhotoUrl())
-                .into(profile);
+
 
         return discover;
     }
@@ -197,6 +202,43 @@ public class Discover_Activity extends Fragment {
         super.onStop();
         listHomeActivity.startListening();
     }
+
+
+
+
+
+    private void userQuery(String userID) {
+
+        FirebaseFirestore dbFireStoreUser = FirebaseFirestore.getInstance();
+        CollectionReference dbUser = dbFireStoreUser.collection("User");
+
+        dbUser
+                .whereEqualTo("userID", userID)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+
+                                userModel = documentSnapshot.toObject(UserModel.class);
+
+                                Log.e("TAG", "onComplete: " + userModel.getUserID());
+
+                                Glide.with(discover)
+                                        .load(userModel.getImageUrl())
+                                        .into(profile);
+
+                            }
+                        } else {
+                            Toast.makeText(getContext(), "Have something went wrong!", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+    }
+
 }
 
 
