@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.naro.newsocial">
 
     <application
@@ -22,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.Home_Activity" />
+        <activity android:name=".Activity.Home_Activity"/>
         <activity android:name=".Activity.Sign_up_Activity" />
         <activity android:name=".Activity.Sign_in_Activity" />
         <activity android:name=".Activity.Setting_Activity_new" />

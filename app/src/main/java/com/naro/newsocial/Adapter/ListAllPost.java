@@ -108,7 +108,6 @@ public class ListAllPost  extends FirestoreRecyclerAdapter<PostModel,ListAllPost
 
     public void deleteItem(int position) {
         notifyItemRemoved(position);
-
     }
 
 

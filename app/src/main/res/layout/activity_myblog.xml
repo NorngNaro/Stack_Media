@@ -8,7 +8,7 @@
     tools:context=".fragmentActivity.Myblog_Activity">
 
 
-    <androidx.appcompat.widget.SearchView
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="34dp"
@@ -16,11 +16,13 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="70dp"
         android:background="@drawable/edittext"
+        android:drawableStart="@drawable/ic_baseline_search_24"
         android:padding="5dp"
-        app:iconifiedByDefault="false"
+        android:hint=" Search posts"
+        android:singleLine="true"
+        android:imeOptions="actionSearch"
         app:layout_constraintEnd_toStartOf="@+id/pic_hold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:queryHint="Search" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/pic_hold"
@@ -70,6 +72,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="16dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
