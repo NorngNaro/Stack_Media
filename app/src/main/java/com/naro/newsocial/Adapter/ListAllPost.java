@@ -40,6 +40,7 @@ public class ListAllPost  extends FirestoreRecyclerAdapter<PostModel,ListAllPost
      // Set view to list
         allPost.title.setText(postModel.getTitle());
         allPost.date.setText(postModel.getDate());
+        allPost.view.setText(postModel.getView() + "");
         Glide.with(allPost.itemView.getContext())
                 .load(postModel.getUrl())
                 .into(allPost.imageView);
@@ -58,6 +59,8 @@ public class ListAllPost  extends FirestoreRecyclerAdapter<PostModel,ListAllPost
         AppCompatImageView imageView;
         AppCompatTextView title;
         AppCompatTextView date;
+        AppCompatTextView view;
+
 
         CardView btnEdit;
         CardView btnDelete;
@@ -71,6 +74,7 @@ public class ListAllPost  extends FirestoreRecyclerAdapter<PostModel,ListAllPost
             imageView = itemView.findViewById(R.id.image_show);
             title = itemView.findViewById(R.id.title);
             date = itemView.findViewById(R.id.txt_postdate);
+            view = itemView.findViewById(R.id.textViewPost);
             btnEdit = itemView.findViewById(R.id.btn_edit);
             btnDelete = itemView.findViewById(R.id.btn_view_delete);
 

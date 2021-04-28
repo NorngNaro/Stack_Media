@@ -232,7 +232,6 @@ public class CreateArticleActivity extends AppCompatActivity {
                                 url = uri.toString();
                                 Log.e("TAG", "onSuccess: " + url );
                                 uploadData();
-                                finish();
                             }
                         });
                     }
@@ -291,7 +290,7 @@ public class CreateArticleActivity extends AppCompatActivity {
                 String userID = FirebaseAuth.getInstance().getUid();
                 String date = dtf.format(now);
 
-                PostModel postModel = new PostModel(title,description,url,userID,date);
+                PostModel postModel = new PostModel(title,description,url,userID,date,0);
 
                 dbPost.add(postModel)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -300,6 +299,7 @@ public class CreateArticleActivity extends AppCompatActivity {
                                 Log.d("TAG", "onSuccess: Post Success ");
                                // binding.progressBar.setVisibility(View.INVISIBLE);
                                 Toast.makeText(CreateArticleActivity.this ,"Post Uploaded", Toast.LENGTH_LONG).show();
+                                finish();
 
                             }
                         })
@@ -318,6 +318,7 @@ public class CreateArticleActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,REQUEST_CODE);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

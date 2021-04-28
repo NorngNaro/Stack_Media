@@ -2,6 +2,7 @@ package com.naro.newsocial.Activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +41,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 import static com.facebook.GraphRequest.TAG;
 
@@ -66,6 +69,7 @@ public class View_Activity extends Activity {
 
             postQuery(postID);
 
+
             // On action edit post
 
             editClick(postID);
@@ -90,19 +94,36 @@ public class View_Activity extends Activity {
         }
 
 
-    private void imageClick(){
-        binding.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent intent =  new Intent(View_Activity.this , ImageView_Activity.class);
-                intent.putExtra("ImageUrl", postModel.getUrl());
-                Log.e(TAG, "onClick: URL" + postModel.getUrl() );
-                startActivity(intent);
+        private void addView(int oldView){
+            CollectionReference dbView = dbFireStore.collection("Post");
+            dbView
+                    .document(postID)
+                    .update("view",oldView + 1)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Log.e(TAG, "Add view complete");
+                        }
+                    });
 
-            }
-        });
-    }
+
+        }
+
+
+        private void imageClick(){
+            binding.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent =  new Intent(View_Activity.this , ImageView_Activity.class);
+                    intent.putExtra("ImageUrl", postModel.getUrl());
+                    Log.e(TAG, "onClick: URL" + postModel.getUrl() );
+                    startActivity(intent);
+
+                }
+            });
+        }
 
 
 
@@ -212,12 +233,16 @@ public class View_Activity extends Activity {
                             if (task.isSuccessful()){
                                 DocumentSnapshot snapshot = task.getResult();
                                 postModel = snapshot.toObject(PostModel.class);
+                                addView(postModel.getView());
+
+
                                 Log.e(TAG, "onComplete: " + snapshot.getData() );
                                 userQuery();
                                 binding.title.setText(postModel.getTitle());
 
                                 binding.date.setText(postModel.getDate());
                                 binding.text.setText(postModel.getDescription());
+                                binding.textShowView.setText(postModel.getView() + " Views");
                                 url = postModel.getUrl();
                                 Glide.with(View_Activity.this)
                                         .load(postModel.getUrl())
@@ -260,6 +285,8 @@ public class View_Activity extends Activity {
                     }
                 });
     }
+
+
 
 
     private void checkUser(){

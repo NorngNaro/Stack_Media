@@ -1,4 +1,4 @@
-package com.naro.newsocial.Adapter;
+  package com.naro.newsocial.Adapter;
 
 
 import android.util.Log;
@@ -28,11 +28,10 @@ import com.naro.newsocial.Model.UserModel;
 import com.naro.newsocial.R;
 
 
-public class ListHomeActivity extends FirestoreRecyclerAdapter<PostModel , ListHomeActivity.HomeHolder> {
+  public class ListHomeActivity extends FirestoreRecyclerAdapter<PostModel , ListHomeActivity.HomeHolder> {
 
     private OnItemClickListener listener;
-    private OnItemClickListener btn_love;
-    boolean click = false ;
+    private boolean click ;
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
@@ -54,6 +53,8 @@ public class ListHomeActivity extends FirestoreRecyclerAdapter<PostModel , ListH
     @Override
     protected void onBindViewHolder(@NonNull HomeHolder homeHolder, int i, @NonNull PostModel postModel) {
 
+
+
         // Query data of user that post this post
         FirebaseFirestore dbFireStoreUser = FirebaseFirestore.getInstance();
         CollectionReference dbSignIn = dbFireStoreUser.collection("User");
@@ -66,7 +67,9 @@ public class ListHomeActivity extends FirestoreRecyclerAdapter<PostModel , ListH
                         if (task.isSuccessful()){
                             for (QueryDocumentSnapshot documentSnapshots : task.getResult()){
 
+
                                 UserModel userModel = documentSnapshots.toObject(UserModel.class);
+
                                 // User
                                 Glide.with(homeHolder.itemView.getContext())
                                         .load(userModel.getImageUrl())
@@ -77,9 +80,12 @@ public class ListHomeActivity extends FirestoreRecyclerAdapter<PostModel , ListH
                                 // Set view to list
                                 homeHolder.title.setText(postModel.getTitle());
                                 homeHolder.date.setText(postModel.getDate());
+                                homeHolder.countLove.setText(postModel.getView() + " Views");
                                 Glide.with(homeHolder.itemView.getContext())
                                         .load(postModel.getUrl())
                                         .into(homeHolder.imageView);
+
+
 
                             }
                         }else {
@@ -91,10 +97,8 @@ public class ListHomeActivity extends FirestoreRecyclerAdapter<PostModel , ListH
                 });
 
 
-
-
-
     }
+
 
     class HomeHolder extends RecyclerView.ViewHolder{
 
@@ -104,7 +108,7 @@ public class ListHomeActivity extends FirestoreRecyclerAdapter<PostModel , ListH
         AppCompatTextView writer;
         AppCompatTextView date;
         AppCompatImageView love;
-        AppCompatImageView comment;
+        AppCompatTextView countLove;
 
 
         public HomeHolder(@NonNull View itemView) {
@@ -115,6 +119,8 @@ public class ListHomeActivity extends FirestoreRecyclerAdapter<PostModel , ListH
             writer = itemView.findViewById(R.id.writer);
             date = itemView.findViewById(R.id.date);
             love = itemView.findViewById(R.id.btn_love);
+            countLove = itemView.findViewById(R.id.countLike);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -125,42 +131,10 @@ public class ListHomeActivity extends FirestoreRecyclerAdapter<PostModel , ListH
                 }
             });
 
-            love.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(!click){
-                        love.setImageResource(R.drawable.heart);
-                        click = true;
-
-
-
-
-                        int position = getAdapterPosition();
-
-                        Log.e("TAG", "onClick: "+ getSnapshots().getSnapshot(position) );
-
-//                        if(position != RecyclerView.NO_POSITION && btn_love != null)
-//                            btn_love.onItemClick(getSnapshots().getSnapshot(position),position);
-
-                        Log.e("TAG", "onClick: "+ click );
-                        Log.e("TAG", "onClick: "+ position );
-
-                    }else {
-                        love.setImageResource(R.drawable.heartnew);
-                        click = false;
-                    }
-
-                }
-            });
 
         }
 
     }
-
-    public void setOnLoveClickListener(OnItemClickListener btn_love) {
-        this.btn_love =  btn_love;
-    }
-
 
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -172,10 +146,6 @@ public class ListHomeActivity extends FirestoreRecyclerAdapter<PostModel , ListH
 
 
     }
-
-
-
-
 
 
 }

@@ -48,6 +48,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import static android.content.ContentValues.TAG;
+
 
 public class Discover_Activity extends Fragment {
 
@@ -59,6 +61,7 @@ public class Discover_Activity extends Fragment {
     private ArrayList<PostModel> postList;
     private SwipeRefreshLayout swipe;
     private ProgressBar loading;
+    private boolean loved = false;
     AppCompatImageView profile;
 
 
@@ -141,53 +144,7 @@ public class Discover_Activity extends Fragment {
         });
 
 
-        listHomeActivity.setOnLoveClickListener(new ListHomeActivity.OnItemClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-                    addLove(documentSnapshot.getId());
-            }
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
-
     }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void addLove(String postID){
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        FirebaseFirestore dbPost = FirebaseFirestore.getInstance();
-        CollectionReference dbAllPost = dbPost.collection("Post").document(postID).collection("love");
-
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDateTime now = LocalDateTime.now();
-
-         loveModel = new LoveModel(user.getUid(),dtf.format(now));
-
-        dbAllPost.add(loveModel)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getContext(), "Loved" , Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getContext(), "Have something went wrong! " , Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
-    }
-
-
 
 
     @Override

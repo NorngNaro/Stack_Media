@@ -7,16 +7,18 @@ public class PostModel {
     private String url;
     private String userID;
     private String date;
+    private int view;
 
 
-    public PostModel(String title, String description, String url, String userID, String date) {
+
+    public PostModel(String title, String description, String url, String userID, String date, int view) {
         this.title = title;
         this.description = description;
         this.url = url;
         this.userID = userID;
         this.date = date;
+        this.view = view;
     }
-
 
     public PostModel(){
 
@@ -60,6 +62,15 @@ public class PostModel {
     public void setDate(String date) {
         this.date = date;
     }
+
+    public int getView() {
+        return view;
+    }
+
+    public void setView(int view) {
+        this.view = view;
+    }
+
 
 }
 

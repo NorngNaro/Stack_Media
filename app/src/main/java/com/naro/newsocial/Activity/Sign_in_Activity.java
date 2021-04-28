@@ -174,9 +174,6 @@ public class Sign_in_Activity extends AppCompatActivity {
         CollectionReference dbSignIn = dbFireStoreUser.collection("User");
 
 
-
-
-
         String username = user.getDisplayName();
                 String email = user.getEmail();
                 String phone = user.getPhoneNumber();

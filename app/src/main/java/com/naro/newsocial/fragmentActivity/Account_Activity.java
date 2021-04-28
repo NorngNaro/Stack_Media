@@ -182,7 +182,6 @@ public class Account_Activity extends Fragment {
         listAllPost = new ListAllPost(options);
         Log.e(TAG, "setUpRecycler: Option "+options );
         recyclerView = account.findViewById(R.id.accountRecycler);
-        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(listAllPost);
 

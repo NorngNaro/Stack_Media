@@ -114,6 +114,9 @@ public class Edit_profile_Activity extends AppCompatActivity {
     }
 
 
+
+
+
     private void userQuery(String userID) {
 
         binding.progressBar.setVisibility(View.VISIBLE);
@@ -149,7 +152,7 @@ public class Edit_profile_Activity extends AppCompatActivity {
                                 }
 
                                 userPostID = documentSnapshot.getId();
-                                Log.e("TAG", "onComplete: " + userPostID);
+                                Log.e("TAG", "onComplete: get Post ID " + userPostID);
 
                                 // Hide progress bar
                                 binding.progressBar.setVisibility(View.INVISIBLE);
@@ -161,6 +164,32 @@ public class Edit_profile_Activity extends AppCompatActivity {
 
                     }
                 });
+
+    }
+
+
+
+
+    private void getimage(String ID){
+        Log.e(TAG, "getimage: Work" );
+        FirebaseFirestore dbFireStoreUser = FirebaseFirestore.getInstance();
+        CollectionReference dbUser = dbFireStoreUser.collection("User").document(ID).collection("image");
+
+ dbUser.get()
+         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+             @Override
+             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                 Log.e(TAG, "onComplete: work " );
+                 if (task.isSuccessful()) {
+                     Log.e(TAG, "onComplete: sucess");
+                     for (DocumentSnapshot snapshot : task.getResult()) {
+                         Log.e(TAG, "Data" + snapshot.getData());
+                     }
+                 }
+
+                 }
+         });
+
 
     }
 
@@ -205,6 +234,9 @@ public class Edit_profile_Activity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE);
     }
 
+
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -219,11 +251,14 @@ public class Edit_profile_Activity extends AppCompatActivity {
 
     }
 
+
     private String getFile(Uri uri) {
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
+
+
 
     private void imageUpload() {
 
@@ -249,6 +284,9 @@ public class Edit_profile_Activity extends AppCompatActivity {
             });
         }
     }
+
+
+
 
     private void deleteImage(String profileUrl){
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();

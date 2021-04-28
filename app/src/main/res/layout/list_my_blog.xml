@@ -105,7 +105,7 @@
 
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/appCompatTextView"
+                android:id="@+id/textViewPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -118,10 +118,10 @@
                 android:id="@+id/appCompatTextView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Loves"
-                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView"
-                app:layout_constraintStart_toEndOf="@+id/appCompatTextView"
-                app:layout_constraintTop_toTopOf="@+id/appCompatTextView" />
+                android:text=" Views"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewPost"
+                app:layout_constraintStart_toEndOf="@+id/textViewPost"
+                app:layout_constraintTop_toTopOf="@+id/textViewPost" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/commentShow"
@@ -129,9 +129,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="0"
-                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewPost"
                 app:layout_constraintStart_toEndOf="@+id/appCompatTextView7"
-                app:layout_constraintTop_toTopOf="@+id/appCompatTextView" />
+                app:layout_constraintTop_toTopOf="@+id/textViewPost" />
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -139,9 +139,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" Comments"
-                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewPost"
                 app:layout_constraintStart_toEndOf="@+id/commentShow"
-                app:layout_constraintTop_toTopOf="@+id/appCompatTextView" />
+                app:layout_constraintTop_toTopOf="@+id/textViewPost" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/shareShow"
@@ -149,18 +149,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="0"
-                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewPost"
                 app:layout_constraintStart_toEndOf="@+id/appCompatTextView8"
-                app:layout_constraintTop_toTopOf="@+id/appCompatTextView" />
+                app:layout_constraintTop_toTopOf="@+id/textViewPost" />
 
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" Shares"
-                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewPost"
                 app:layout_constraintStart_toEndOf="@+id/shareShow"
-                app:layout_constraintTop_toTopOf="@+id/appCompatTextView" />
+                app:layout_constraintTop_toTopOf="@+id/textViewPost" />
 
 
 

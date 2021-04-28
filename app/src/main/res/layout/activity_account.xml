@@ -7,6 +7,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".fragmentActivity.Account_Activity">
 
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btn_setting"
                 android:layout_width="wrap_content"
@@ -18,24 +28,24 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="44dp"
-        app:cardCornerRadius="50dp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="44dp"
+                app:cardCornerRadius="50dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image_profile"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_baseline_person_24" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_baseline_person_24" />
 
-    </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/edit_profile"
@@ -51,138 +61,144 @@
                 app:layout_constraintEnd_toEndOf="@+id/cardView"
                 app:layout_constraintStart_toStartOf="@+id/cardView" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/username"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/bio"
-        app:layout_constraintStart_toStartOf="@+id/bio"
-        app:layout_constraintTop_toTopOf="@+id/cardView" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/username"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/bio"
+                app:layout_constraintStart_toStartOf="@+id/bio"
+                app:layout_constraintTop_toTopOf="@+id/cardView" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/bio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/bio"
-        android:textAlignment="center"
-        android:textColor="@color/baseColor"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/layout_card"
-        app:layout_constraintStart_toStartOf="@+id/layout_card"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_card"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/bio">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/appCompatTextView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/appCompatTextViewgdfg"
-            app:layout_constraintStart_toStartOf="@+id/appCompatTextViewgdfg"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/appCompatTextView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/appCompatTextView1sdfds"
-            app:layout_constraintStart_toStartOf="@+id/appCompatTextView1sdfds"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/appCompatTextView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/appCompatTextView11d"
-            app:layout_constraintStart_toStartOf="@+id/appCompatTextView11d"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/bio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/bio"
+                android:textAlignment="center"
+                android:textColor="@color/baseColor"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/layout_card"
+                app:layout_constraintStart_toStartOf="@+id/layout_card"
+                app:layout_constraintTop_toBottomOf="@+id/username" />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/appCompatTextViewgdfg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:text="Posts"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView9" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_card"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cardView"
+                app:layout_constraintTop_toBottomOf="@+id/bio">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/appCompatTextView1sdfds"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Followers"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/appCompatTextView11"
-            app:layout_constraintStart_toEndOf="@+id/appCompatTextView9"
-            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView10" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/appCompatTextViewgdfg"
+                    app:layout_constraintStart_toStartOf="@+id/appCompatTextViewgdfg"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/appCompatTextView11d"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
-            android:text="Following"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView11" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/appCompatTextView1sdfds"
+                    app:layout_constraintStart_toStartOf="@+id/appCompatTextView1sdfds"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/appCompatTextView11d"
+                    app:layout_constraintStart_toStartOf="@+id/appCompatTextView11d"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextViewgdfg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="Posts"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/appCompatTextView9" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView1sdfds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Followers"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/appCompatTextView11"
+                    app:layout_constraintStart_toEndOf="@+id/appCompatTextView9"
+                    app:layout_constraintTop_toBottomOf="@+id/appCompatTextView10" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView11d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:text="Following"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/appCompatTextView11" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/accountRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintTop_toBottomOf="@+id/layout_card" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
+
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:padding="165dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/accountRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_card" />
-
-
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:padding="165dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-
-
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>

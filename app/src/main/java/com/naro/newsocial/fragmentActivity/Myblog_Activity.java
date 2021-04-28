@@ -134,7 +134,7 @@ public class Myblog_Activity extends Fragment  {
         FirebaseFirestore dbPost = FirebaseFirestore.getInstance();
         CollectionReference dbViewPost = dbPost.collection("Post");
 
-        Query query = dbViewPost.orderBy("title").startAt(find);
+        Query query = dbViewPost.orderBy("date").startAt(find);
 
         FirestoreRecyclerOptions<PostModel> options = new FirestoreRecyclerOptions.Builder<PostModel>()
                 .setQuery(query, PostModel.class)
