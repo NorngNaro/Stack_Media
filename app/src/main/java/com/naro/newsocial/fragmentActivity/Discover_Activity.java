@@ -16,7 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -55,14 +58,13 @@ public class Discover_Activity extends Fragment {
 
 
     private ListHomeActivity listHomeActivity;
-    private LoveModel loveModel;
     private UserModel userModel;
     private View discover;
-    private ArrayList<PostModel> postList;
     private SwipeRefreshLayout swipe;
     private ProgressBar loading;
-    private boolean loved = false;
-    AppCompatImageView profile;
+    private AppCompatImageView profile;
+    private CardView picUser;
+    private AppCompatImageView search;
 
 
 
@@ -73,20 +75,40 @@ public class Discover_Activity extends Fragment {
             swipe = discover.findViewById(R.id.swipe);
             profile = discover.findViewById(R.id.pic_user);
             loading = discover.findViewById(R.id.progressBar);
-
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        userQuery(user.getUid());
-
-    swipeDown();
-    setUpRecycler();
+            picUser = discover.findViewById(R.id.pic_hold);
+            search = discover.findViewById(R.id.btnSearch);
 
 
+            search.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Fragment fragment = new Myblog_Activity();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.container_fragment, fragment , "Search_Fragment");
+                    fragmentTransaction.commit();
+                    Log.e(TAG, "onClick: Search click " );
+                }
+            });
+
+            picUser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                 public void onClick(View v) {
+
+                     Fragment fragment = new Account_Activity();
+                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                     fragmentTransaction.replace(R.id.container_fragment, fragment,"Account_Fragment");
+                     fragmentTransaction.commit();
+                     Log.e(TAG, "onClick: User click " );
+
+                 }
+            });
+
+
+         userQuery(user.getUid());
+         swipeDown();
+         setUpRecycler();
 
         return discover;
     }
@@ -108,7 +130,7 @@ public class Discover_Activity extends Fragment {
         FirebaseFirestore dbPost = FirebaseFirestore.getInstance();
         CollectionReference dbViewPost = dbPost.collection("Post");
 
-        Query query = dbViewPost.orderBy("date", Query.Direction.DESCENDING);
+        Query query = dbViewPost.orderBy("view", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<PostModel> options = new FirestoreRecyclerOptions.Builder<PostModel>()
                 .setQuery(query, PostModel.class)
                 .build();
@@ -133,8 +155,6 @@ public class Discover_Activity extends Fragment {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
 
-//                Toast.makeText(getContext(),
-//                        "Position: " + position + " ID: " + id, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), View_Activity.class);
                 intent.putExtra("postID", documentSnapshot.getId());
                 startActivity(intent);
@@ -142,7 +162,6 @@ public class Discover_Activity extends Fragment {
             }
 
         });
-
 
     }
 
@@ -154,14 +173,12 @@ public class Discover_Activity extends Fragment {
         listHomeActivity.startListening();
     }
 
+
     @Override
     public void onStop() {
         super.onStop();
         listHomeActivity.startListening();
     }
-
-
-
 
 
     private void userQuery(String userID) {

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ public class Myblog_Activity extends Fragment  {
     private AppCompatEditText searchView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private UserModel userModel;
+    private LinearLayout no_result;
     private AppCompatImageView profile;
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -61,6 +63,7 @@ public class Myblog_Activity extends Fragment  {
         swipeRefreshLayout = myBlog.findViewById(R.id.swipe);
         searchView = myBlog.findViewById(R.id.searchView);
         profile = myBlog.findViewById(R.id.pic_user);
+        no_result = myBlog.findViewById(R.id.no_result);
 
         userQuery(user.getUid());
 
@@ -82,6 +85,7 @@ public class Myblog_Activity extends Fragment  {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     loading.setVisibility(View.VISIBLE);
+                    no_result.setVisibility(View.GONE);
                     setUpRecyclerView(searchView.getText().toString());
                     InputMethodManager in = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     in.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
@@ -94,6 +98,8 @@ public class Myblog_Activity extends Fragment  {
         return myBlog;
 
     }
+
+
 
 
 
@@ -134,7 +140,8 @@ public class Myblog_Activity extends Fragment  {
         FirebaseFirestore dbPost = FirebaseFirestore.getInstance();
         CollectionReference dbViewPost = dbPost.collection("Post");
 
-        Query query = dbViewPost.orderBy("date").startAt(find);
+        Query query = dbViewPost.orderBy("title").startAt(find);
+        //Query query = dbViewPost.orderBy("view", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<PostModel> options = new FirestoreRecyclerOptions.Builder<PostModel>()
                 .setQuery(query, PostModel.class)
@@ -145,6 +152,7 @@ public class Myblog_Activity extends Fragment  {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(listHomeActivity);
+        Log.e(TAG, "setUpRecyclerView: Set Recycler View" );
 
         listHomeActivity.setOnItemClickListener(new ListHomeActivity.OnItemClickListener() {
             @Override

@@ -13,8 +13,8 @@
 
     <item
         android:id="@+id/page_none"
-        android:enabled="true"
-        android:title=""/>
+        android:enabled="false"
+        android:title="" />
 
     <item
         android:id="@+id/notification"

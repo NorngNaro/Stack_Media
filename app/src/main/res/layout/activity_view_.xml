@@ -6,9 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Activity.View_Activity">
 
-
-
-
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
@@ -27,6 +24,20 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/sea"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_baseline_keyboard_backspace_24"
+                android:scaleType="centerCrop"
+                android:backgroundTint="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -152,64 +163,120 @@
                         app:layout_constraintStart_toEndOf="@+id/txt_date"
                         app:layout_constraintTop_toBottomOf="@+id/writer" />
 
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/appCompatImageView2"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/linearLayout3"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginStart="30dp"
-                        android:src="@drawable/icon_eye"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/pic_holder" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/textShowView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="0 Views"
-                        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView2"
-                        app:layout_constraintStart_toEndOf="@+id/appCompatImageView2"
-                        app:layout_constraintTop_toTopOf="@+id/appCompatImageView2" />
-
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/appCompatImageView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:src="@drawable/ic_baseline_textsms_24"
-                        app:layout_constraintBottom_toBottomOf="@+id/textShowView"
-                        app:layout_constraintEnd_toStartOf="@+id/appCompatTextView14"
-                        app:layout_constraintTop_toTopOf="@+id/appCompatTextView14" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/appCompatTextView14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0 Comments"
-                        android:layout_marginEnd="30dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView2"
+                        android:gravity="center"
+                        android:orientation="horizontal"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/appCompatImageView2" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/pic_holder">
+
+
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/btn_love"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:src="@drawable/not_love"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/pic_holder" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/text_love"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="0"
+                            android:textSize="12sp"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="20dp"
+                            android:text="Loves"
+                            android:textSize="12sp"/>
+
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/appCompatImageView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:src="@drawable/icon_eye"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/pic_holder" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/textShowView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="0"
+                            android:textSize="12sp"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="Views"
+                            android:layout_marginEnd="20dp"
+                            android:textSize="12sp"/>
+
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/btn_comment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:src="@drawable/ic_baseline_textsms_24"
+                            app:layout_constraintBottom_toBottomOf="@+id/textShowView"
+                            app:layout_constraintEnd_toStartOf="@+id/appCompatTextView14"
+                            app:layout_constraintTop_toTopOf="@+id/appCompatTextView14" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/appCompatTextView14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/appCompatImageView2" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:text="Comments"
+                            android:layout_marginStart="5dp"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/appCompatImageView2" />
+
+                    </LinearLayout>
 
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
-                        android:layout_marginTop="20dp"
                         android:text="@string/blog"
                         android:textSize="18sp"
-                        android:layout_marginBottom="20dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView2" />
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -219,17 +286,7 @@
 
     </ScrollView>
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_back"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:src="@drawable/ic_baseline_keyboard_backspace_24"
-        android:scaleType="centerCrop"
-        android:backgroundTint="@color/colorPrimary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
 
     <ProgressBar

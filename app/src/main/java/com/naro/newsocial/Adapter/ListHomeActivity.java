@@ -31,7 +31,6 @@ import com.naro.newsocial.R;
   public class ListHomeActivity extends FirestoreRecyclerAdapter<PostModel , ListHomeActivity.HomeHolder> {
 
     private OnItemClickListener listener;
-    private boolean click ;
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
@@ -66,8 +65,6 @@ import com.naro.newsocial.R;
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
                             for (QueryDocumentSnapshot documentSnapshots : task.getResult()){
-
-
                                 UserModel userModel = documentSnapshots.toObject(UserModel.class);
 
                                 // User
@@ -75,17 +72,6 @@ import com.naro.newsocial.R;
                                         .load(userModel.getImageUrl())
                                         .into(homeHolder.picUser);
                                 homeHolder.writer.setText(userModel.getUserName());
-
-
-                                // Set view to list
-                                homeHolder.title.setText(postModel.getTitle());
-                                homeHolder.date.setText(postModel.getDate());
-                                homeHolder.countLove.setText(postModel.getView() + " Views");
-                                Glide.with(homeHolder.itemView.getContext())
-                                        .load(postModel.getUrl())
-                                        .into(homeHolder.imageView);
-
-
 
                             }
                         }else {
@@ -95,6 +81,16 @@ import com.naro.newsocial.R;
 
                     }
                 });
+
+        // Set view to list
+        homeHolder.title.setText(postModel.getTitle());
+        homeHolder.date.setText(postModel.getDate());
+        homeHolder.countLove.setText(postModel.getView() + " Views");
+        Glide.with(homeHolder.itemView.getContext())
+                .load(postModel.getUrl())
+                .into(homeHolder.imageView);
+
+
 
 
     }

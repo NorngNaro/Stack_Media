@@ -23,6 +23,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -63,6 +64,7 @@ public class Account_Activity extends Fragment {
     private UserModel userModel;
     private TextView bio;
     private View account;
+    private SwipeRefreshLayout swipe;
     private ProgressBar progressBar;
     private AppCompatButton editProfile;
     private RecyclerView recyclerView;
@@ -80,6 +82,7 @@ public class Account_Activity extends Fragment {
         editProfile = account.findViewById(R.id.edit_profile);
         setting = account.findViewById(R.id.btn_setting);
         progressBar = account.findViewById(R.id.progressBar);
+        swipe = account.findViewById(R.id.swipe);
 
 
         profile();
@@ -87,9 +90,21 @@ public class Account_Activity extends Fragment {
         setting();
 
         setUpRecycler();
+        swipeDown();
 
 
         return account;
+    }
+
+
+    private void swipeDown(){
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipe.setRefreshing(false);
+                setUpRecycler();
+            }
+        });
     }
 
 

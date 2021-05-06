@@ -26,7 +26,7 @@ public class Notification_activity extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View setting = inflater.inflate(R.layout.activity_notification, container, false);
+        View notification = inflater.inflate(R.layout.activity_notification, container, false);
 
 
 
@@ -34,7 +34,7 @@ public class Notification_activity extends Fragment {
 
 
 
-        return setting;
+        return notification;
     }
 
 

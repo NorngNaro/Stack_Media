@@ -8,16 +8,18 @@ public class PostModel {
     private String userID;
     private String date;
     private int view;
+    private int love;
+    private int comment;
 
-
-
-    public PostModel(String title, String description, String url, String userID, String date, int view) {
+    public PostModel(String title, String description, String url, String userID, String date, int view, int love, int comment) {
         this.title = title;
         this.description = description;
         this.url = url;
         this.userID = userID;
         this.date = date;
         this.view = view;
+        this.love = love;
+        this.comment = comment;
     }
 
     public PostModel(){
@@ -71,6 +73,20 @@ public class PostModel {
         this.view = view;
     }
 
+    public int getLove() {
+        return love;
+    }
 
+    public void setLove(int love) {
+        this.love = love;
+    }
+
+    public int getComment() {
+        return comment;
+    }
+
+    public void setComment(int comment) {
+        this.comment = comment;
+    }
 }
 

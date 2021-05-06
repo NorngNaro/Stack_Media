@@ -290,7 +290,7 @@ public class CreateArticleActivity extends AppCompatActivity {
                 String userID = FirebaseAuth.getInstance().getUid();
                 String date = dtf.format(now);
 
-                PostModel postModel = new PostModel(title,description,url,userID,date,0);
+                PostModel postModel = new PostModel(title,description,url,userID,date,0,0,0);
 
                 dbPost.add(postModel)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
