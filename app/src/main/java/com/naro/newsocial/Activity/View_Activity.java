@@ -32,7 +32,7 @@ import com.naro.newsocial.Model.PostModel;
 import com.naro.newsocial.Model.UserModel;
 import com.naro.newsocial.R;
 import com.naro.newsocial.databinding.ActivityViewBinding;
-import com.naro.newsocial.fragmentActivity.Myblog_Activity;
+import com.naro.newsocial.fragmentActivity.Search_Activity;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -345,7 +345,7 @@ public class View_Activity extends Activity {
             binding.btnViewDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Myblog_Activity myblog_activity = new Myblog_Activity();
+                    Search_Activity myblog_activity = new Search_Activity();
 
                     new AlertDialog.Builder(View_Activity.this)
                             .setTitle("Delete this post?")

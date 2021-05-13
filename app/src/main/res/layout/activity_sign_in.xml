@@ -69,25 +69,32 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
 
-
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:entries="@array/spinnerItems"
+                        android:layout_marginStart="15dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/layer_email"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/layer_email" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layer_email"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="15dp"
-                        android:hint="@string/email"
+                        android:hint="Phone"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/spinner"
                         app:layout_constraintTop_toBottomOf="@+id/text_welcome">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_Phone"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textPassword" />
+                            android:layout_height="wrap_content" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,6 +113,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/layer_email">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textPassword" />

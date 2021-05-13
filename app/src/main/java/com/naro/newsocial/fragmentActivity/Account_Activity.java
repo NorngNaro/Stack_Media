@@ -119,7 +119,6 @@ public class Account_Activity extends Fragment {
 
 
 
-
     private void setting(){
         setting.setOnClickListener(new View.OnClickListener() {
             @Override

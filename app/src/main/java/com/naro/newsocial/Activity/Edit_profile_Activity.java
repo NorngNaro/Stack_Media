@@ -2,6 +2,7 @@ package com.naro.newsocial.Activity;
 
 import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -67,7 +68,20 @@ public class Edit_profile_Activity extends AppCompatActivity {
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+                new AlertDialog.Builder(Edit_profile_Activity.this)
+                        .setTitle("Back")
+                        .setMessage("Do you want to discard change?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No",null)
+                        .show();
+
+
             }
         });
 
@@ -92,18 +106,29 @@ public class Edit_profile_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e(TAG, "onClick: image FireStore "+ imageFireStore );
-                if(imageFireStore){
-                    Log.e(TAG, "Save Click : have an old photo " );
-                    if(imagePick == true){
-                        deleteImage(userModel.getImageUrl());
-                        imageUpload();
-                    }
-                    editData(userPostID);
+                new AlertDialog.Builder(Edit_profile_Activity.this)
+                        .setTitle("Save")
+                        .setMessage("Do you want to save change?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if(imageFireStore){
+                                    Log.e(TAG, "Save Click : have an old photo " );
+                                    if(imagePick == true){
+                                        deleteImage(userModel.getImageUrl());
+                                        imageUpload();
+                                    }
+                                    editData(userPostID);
 
-                }else{
-                    Log.e(TAG, "Save Click : not have image photo " );
-                    imageUpload();
-                }
+                                }else{
+                                    Log.e(TAG, "Save Click : not have image photo " );
+                                    imageUpload();
+                                }
+                            }
+                        })
+                        .setNegativeButton("No",null)
+                        .show();
+
             }
         });
     }
@@ -170,28 +195,28 @@ public class Edit_profile_Activity extends AppCompatActivity {
 
 
 
-    private void getimage(String ID){
-        Log.e(TAG, "getimage: Work" );
-        FirebaseFirestore dbFireStoreUser = FirebaseFirestore.getInstance();
-        CollectionReference dbUser = dbFireStoreUser.collection("User").document(ID).collection("image");
-
- dbUser.get()
-         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-             @Override
-             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                 Log.e(TAG, "onComplete: work " );
-                 if (task.isSuccessful()) {
-                     Log.e(TAG, "onComplete: sucess");
-                     for (DocumentSnapshot snapshot : task.getResult()) {
-                         Log.e(TAG, "Data" + snapshot.getData());
-                     }
-                 }
-
-                 }
-         });
-
-
-    }
+//    private void getimage(String ID){
+//        Log.e(TAG, "getimage: Work" );
+//        FirebaseFirestore dbFireStoreUser = FirebaseFirestore.getInstance();
+//        CollectionReference dbUser = dbFireStoreUser.collection("User").document(ID).collection("image");
+//
+// dbUser.get()
+//         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//             @Override
+//             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                 Log.e(TAG, "onComplete: work " );
+//                 if (task.isSuccessful()) {
+//                     Log.e(TAG, "onComplete: sucess");
+//                     for (DocumentSnapshot snapshot : task.getResult()) {
+//                         Log.e(TAG, "Data" + snapshot.getData());
+//                     }
+//                 }
+//
+//                 }
+//         });
+//
+//
+//    }
 
 
     private void editData(String userPostID) {

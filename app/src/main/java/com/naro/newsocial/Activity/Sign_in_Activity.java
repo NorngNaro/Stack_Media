@@ -1,10 +1,12 @@
 package com.naro.newsocial.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +37,8 @@ import com.naro.newsocial.Model.UserModel;
 import com.naro.newsocial.R;
 import com.naro.newsocial.databinding.ActivitySignInBinding;
 
+import static android.content.ContentValues.TAG;
+
 
 public class Sign_in_Activity extends AppCompatActivity {
 
@@ -45,6 +49,10 @@ public class Sign_in_Activity extends AppCompatActivity {
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
     private boolean newUser = true;
+    private boolean checkUser = true;
+    private String spinner;
+    private String[] countryList ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +77,12 @@ public class Sign_in_Activity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
+
+
+        countryList = getResources().getStringArray(R.array.spinnerItems);
+
+        spinnerItemSelected();
+        loginClick();
 
 
         binding.googleButton.setOnClickListener(new View.OnClickListener() {
@@ -150,14 +164,14 @@ public class Sign_in_Activity extends AppCompatActivity {
            Log.d(TAG, "Display Phone" + user.getPhotoUrl());
            Log.d(TAG, "Display Phone" + user.getUid());
            createUser(user);
-           save_Login(user);
+           save_Login();
 
            Intent intent = new Intent(this,Home_Activity.class);
            startActivity(intent);
 
     }
 
-    private void save_Login(FirebaseUser user){
+    private void save_Login(){
 
         SharedPreferences prefs = getSharedPreferences(Flash_screen_Activity.MyPREFERENCES,MODE_PRIVATE);
         SharedPreferences.Editor myEditor = prefs.edit();
@@ -183,9 +197,10 @@ public class Sign_in_Activity extends AppCompatActivity {
                 String bio ="";
                 String imageUrl = user.getPhotoUrl().toString();
                 String userID = user.getUid();
+                String password = "";
 
 
-                 UserModel userModel = new UserModel(username,email,phone,imageUrl,userID,bio);
+                 UserModel userModel = new UserModel(username,email,phone,imageUrl,userID,bio,password);
 
 
         dbSignIn
@@ -245,5 +260,82 @@ public class Sign_in_Activity extends AppCompatActivity {
     }
 
 
+
+
+    // Login with database
+
+    private void spinnerItemSelected(){
+
+        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @SuppressLint("ResourceType")
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.e(TAG, "onItemSelected: Position" +position );
+                Log.e(TAG, "Item Selected"+countryList[position] );
+                spinner = countryList[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+
+
+    private void loginClick(){
+
+        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (binding.inputPhone.getText().toString().length() == 0){
+                    binding.inputPhone.setError("Phone is required!");
+                }
+                if (binding.inputPassword.getText().toString().length() == 0){
+                    binding.inputPassword.setError("Phone is required!");
+                }
+                if (binding.inputPhone.getText().toString().length() != 0 && binding.inputPassword.getText().toString().length() != 0){
+                    checkDataUser();
+                }
+            }
+        });
+
+    }
+
+
+
+    private void checkDataUser(){
+        // Write a message to the database
+        FirebaseFirestore dbFireStoreUser = FirebaseFirestore.getInstance();
+        CollectionReference dbSignIn = dbFireStoreUser.collection("User");
+
+        dbSignIn
+                .whereEqualTo("phone",spinner+binding.inputPhone.getText().toString())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (DocumentSnapshot snapshot : task.getResult()){
+                                Log.e(TAG, "Data"+snapshot.getData() );
+                                UserModel userModel = snapshot.toObject(UserModel.class);
+                                if (binding.inputPassword.getText().toString().equals(userModel.getPassword())){
+                                    save_Login();
+                                    checkUser = false;
+                                    Intent intent = new Intent(Sign_in_Activity.this ,Home_Activity.class);
+                                    startActivity(intent);
+                                }else {
+                                    binding.inputPassword.setError("Incorrect Password!");
+                                }
+                            }
+                            if (checkUser){
+                                Toast.makeText(Sign_in_Activity.this, "Your phone is not registered yet!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+    }
 
 }

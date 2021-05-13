@@ -43,7 +43,7 @@ import com.naro.newsocial.R;
 import static com.facebook.GraphRequest.TAG;
 
 
-public class Myblog_Activity extends Fragment  {
+public class Search_Activity extends Fragment  {
 
     private View myBlog;
     private ProgressBar loading;
@@ -56,7 +56,7 @@ public class Myblog_Activity extends Fragment  {
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        myBlog = inflater.inflate(R.layout.activity_myblog, container, false);
+        myBlog = inflater.inflate(R.layout.activity_search, container, false);
 
         // Init view
         loading = myBlog.findViewById(R.id.progressBar);
@@ -89,6 +89,7 @@ public class Myblog_Activity extends Fragment  {
                     setUpRecyclerView(searchView.getText().toString());
                     InputMethodManager in = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     in.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+
                     return true;
                 }
                 return false;

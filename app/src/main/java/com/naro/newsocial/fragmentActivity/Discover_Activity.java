@@ -2,7 +2,6 @@ package com.naro.newsocial.fragmentActivity;
 
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -27,29 +25,21 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.naro.newsocial.Activity.Sign_in_Activity;
+import com.naro.newsocial.Activity.Home_Activity;
 import com.naro.newsocial.Activity.View_Activity;
 import com.naro.newsocial.Adapter.ListHomeActivity;
-import com.naro.newsocial.Model.LoveModel;
 import com.naro.newsocial.Model.PostModel;
 import com.naro.newsocial.Model.UserModel;
 import com.naro.newsocial.R;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
@@ -82,12 +72,16 @@ public class Discover_Activity extends Fragment {
             search.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Fragment fragment = new Myblog_Activity();
+                    Fragment fragment = new Search_Activity();
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.container_fragment, fragment , "Search_Fragment");
                     fragmentTransaction.commit();
                     Log.e(TAG, "onClick: Search click " );
+
+                    Home_Activity home_activity = (Home_Activity) getActivity();
+                    home_activity.changeItemSelect(2);
+
                 }
             });
 
@@ -101,6 +95,9 @@ public class Discover_Activity extends Fragment {
                      fragmentTransaction.replace(R.id.container_fragment, fragment,"Account_Fragment");
                      fragmentTransaction.commit();
                      Log.e(TAG, "onClick: User click " );
+
+                    Home_Activity home_activity = (Home_Activity) getActivity();
+                    home_activity.changeItemSelect(4);
 
                  }
             });

@@ -37,4 +37,17 @@
 </string>
     <string name="post">Post</string>
     <string name="phone">phone</string>
+
+
+    <string-array name="spinnerItems">
+        <item>+855</item>
+        <item>+886</item>
+        <item>+66 </item>
+        <item>+63 </item>
+        <item>+86 </item>
+        <item>+91 </item>
+        <item>+1  </item>
+
+    </string-array>
+
 </resources>

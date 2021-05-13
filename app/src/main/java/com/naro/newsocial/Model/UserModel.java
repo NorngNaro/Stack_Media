@@ -7,14 +7,16 @@ public class UserModel {
     private String imageUrl;
     private String userID;
     private String bio;
+    private String password;
 
-    public UserModel(String userName, String email, String phone, String imageUrl, String userID, String bio) {
+    public UserModel(String userName, String email, String phone, String imageUrl, String userID, String bio, String password) {
         this.userName = userName;
         this.email = email;
         this.phone = phone;
         this.imageUrl = imageUrl;
         this.userID = userID;
         this.bio = bio;
+        this.password = password;
     }
 
     public UserModel(){
@@ -67,5 +69,13 @@ public class UserModel {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

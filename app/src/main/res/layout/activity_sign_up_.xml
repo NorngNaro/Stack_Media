@@ -84,21 +84,21 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layer_email"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginEnd="15dp"
-                        android:hint="@string/email"
+                        android:hint="Phone"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/spinner"
                         app:layout_constraintTop_toBottomOf="@+id/layer_username">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/input_Email"
+                            android:id="@+id/input_Phone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -164,6 +164,16 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/layer_retype_pass" />
 
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:entries="@array/spinnerItems"
+                        android:layout_marginStart="15dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/layer_email"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/layer_email" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -172,7 +182,7 @@
 
             <LinearLayout
                 android:id="@+id/box"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
@@ -225,5 +235,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="165dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

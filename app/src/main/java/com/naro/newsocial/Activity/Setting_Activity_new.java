@@ -48,9 +48,11 @@ public class Setting_Activity_new extends AppCompatActivity {
         binding.logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
+              //  FirebaseAuth.getInstance().signOut();
                 save_Login();
                 Intent intent = new Intent(Setting_Activity_new.this, Sign_in_Activity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
 
