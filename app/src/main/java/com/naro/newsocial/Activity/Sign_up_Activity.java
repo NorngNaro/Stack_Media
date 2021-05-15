@@ -67,7 +67,6 @@ public class Sign_up_Activity extends Activity {
 
     }
 
-
     private void spinnerItemSelected(){
 
         binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -200,6 +199,7 @@ public class Sign_up_Activity extends Activity {
                         intent.putExtra("userName", binding.inputUsername.getText().toString());
                         intent.putExtra("password" , binding.inputRePassword.getText().toString());
                         intent.putExtra("verificationID" , verificationID);
+                        intent.putExtra("verify","create");
                         startActivity(intent);
                     }
                 }

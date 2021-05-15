@@ -249,7 +249,8 @@ public class Account_Activity extends Fragment {
                 Log.e(TAG, "onItemClick: "+ documentSnapshot.getId() +position );
 
                 new AlertDialog.Builder(getContext())
-                        .setTitle("Delete this post?")
+                        .setTitle("Delete")
+                        .setMessage("Do you want to delete this post?")
                         .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -307,6 +308,7 @@ public class Account_Activity extends Fragment {
                             if(postModel.getUrl() != null){
                                 deletePost(postID , position);
                                 deleteImage(postModel.getUrl());
+                                setUpRecycler();
                             }
 
                         }else {

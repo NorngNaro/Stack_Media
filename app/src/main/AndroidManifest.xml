@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewSocial">
-        <activity android:name=".Activity.Verify_Code_Activity"></activity>
+        <activity android:name=".Activity.Change_Password_Activity"></activity>
+        <activity android:name=".Activity.Find_Account_Activity" />
+        <activity android:name=".Activity.Verify_Code_Activity" />
         <activity android:name=".Activity.ImageView_Activity" />
         <activity android:name=".Activity.Comment_Activity" />
         <activity android:name=".Activity.CreateArticleActivity" />

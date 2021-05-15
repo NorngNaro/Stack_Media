@@ -16,7 +16,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.CollectionReference;
@@ -33,6 +32,7 @@ public class Verify_Code_Activity extends AppCompatActivity {
     private String password;
     private String username;
     private String verificationID;
+    private String verify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +47,12 @@ public class Verify_Code_Activity extends AppCompatActivity {
         password = intent.getExtras().getString("password","None");
         username = intent.getExtras().getString("userName","None");
         verificationID = intent.getExtras().getString("verificationID","None");
+        verify = intent.getExtras().getString("verify","None");
         Log.e("TAG", "" + phoneNumber);
         Log.e("TAG", "" + password);
         Log.e("TAG", "" + username);
         Log.e("TAG", "" + verificationID);
+        Log.e("TAG", "" + verify);
 
         binding.txtInfo.setText("Please type the verify code sent via SMS to " + phoneNumber);
 
@@ -85,20 +87,26 @@ public class Verify_Code_Activity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     binding.progressBar.setVisibility(View.GONE);
                                     if (task.isSuccessful()){
+                                        if (verify.equals("create")) {
+                                            createDatabase();
+                                            save_Login();
+                                            Intent intent = new Intent(Verify_Code_Activity.this , Home_Activity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                        }
+                                        if(verify.equals("forgot")){
+                                            Intent intent = new Intent(Verify_Code_Activity.this , Change_Password_Activity.class);
+                                            intent.putExtra("userPostID",password);
+                                            startActivity(intent);
+                                        }
 
-                                        createDatabase();
-                                        save_Login();
-                                        Intent intent = new Intent(Verify_Code_Activity.this , Home_Activity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
                                     }else {
                                         Toast.makeText(Verify_Code_Activity.this, "The Verification code entered is invalid", Toast.LENGTH_SHORT).show();
                                     }
 
                                 }
                             });
-
 
                 }
 

@@ -95,6 +95,7 @@ public class Edit_profile_Activity extends AppCompatActivity {
 
 
         binding.editEmail.setEnabled(false);
+        binding.editPhone.setEnabled(false);
 
 
     }

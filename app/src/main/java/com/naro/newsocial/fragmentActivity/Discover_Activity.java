@@ -127,7 +127,7 @@ public class Discover_Activity extends Fragment {
         FirebaseFirestore dbPost = FirebaseFirestore.getInstance();
         CollectionReference dbViewPost = dbPost.collection("Post");
 
-        Query query = dbViewPost.orderBy("view", Query.Direction.DESCENDING);
+        Query query = dbViewPost.orderBy("date", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<PostModel> options = new FirestoreRecyclerOptions.Builder<PostModel>()
                 .setQuery(query, PostModel.class)
                 .build();

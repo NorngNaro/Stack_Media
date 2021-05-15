@@ -31,13 +31,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.naro.newsocial.Model.UserModel;
 import com.naro.newsocial.R;
 import com.naro.newsocial.databinding.ActivitySignInBinding;
-
-import static android.content.ContentValues.TAG;
 
 
 public class Sign_in_Activity extends AppCompatActivity {
@@ -100,6 +97,15 @@ public class Sign_in_Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        binding.forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Sign_in_Activity.this, Find_Account_Activity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 

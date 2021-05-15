@@ -11,4 +11,5 @@
     <color name="colorPrimaryDark">#0099ff</color>
     <color name="colorAccent">#D81B60</color>
     <color name="red">#BB0012</color>
+    <color name="blur_white">#88FFFFFF</color>
 </resources>

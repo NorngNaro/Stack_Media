@@ -136,8 +136,7 @@ public class View_Activity extends Activity {
         private void addView( int newLove){
             CollectionReference dbView = dbFireStore.collection("Post");
             int result = newLove + 1;
-            dbView
-                    .document(postID)
+            dbView.document(postID)
                     .update("view",result)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -179,8 +178,7 @@ public class View_Activity extends Activity {
         FirebaseFirestore dbFireStore = FirebaseFirestore.getInstance();
         CollectionReference dbPost = dbFireStore.collection("Post").document(postID).collection("love");
 
-        dbPost
-                .document(loveID)
+        dbPost.document(loveID)
                 .delete()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -251,12 +249,10 @@ public class View_Activity extends Activity {
 
 
     @Override
-    protected void onPause() {
-        super.onPause();
-            check_love();
+    protected void onStop() {
+        super.onStop();
+        check_love();
     }
-
-
 
     private void add_love(int newLove, int update){
         FirebaseFirestore dbFireStore = FirebaseFirestore.getInstance();
