@@ -36,7 +36,7 @@
     <string name="blog"> Blogger often write from a personal perspective that allows them to connect directly with their readers. In addition, most blogs also have a “comments” section where visitors can correspond with the blogger. Interacting with your visitors in the comments section helps to further the connection between the blogger and the reader.
 </string>
     <string name="post">Post</string>
-    <string name="phone">phone</string>
+    <string name="phone">Phone</string>
 
 
     <string-array name="spinnerItems">

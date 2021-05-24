@@ -58,6 +58,14 @@ public class Verify_Code_Activity extends AppCompatActivity {
 
         btnSubmit();
 
+
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
 
@@ -101,6 +109,14 @@ public class Verify_Code_Activity extends AppCompatActivity {
                                             startActivity(intent);
                                         }
 
+                                        if (verify.equals("login")){
+                                            save_Login();
+                                            Intent intent = new Intent(Verify_Code_Activity.this , Home_Activity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                        }
+
                                     }else {
                                         Toast.makeText(Verify_Code_Activity.this, "The Verification code entered is invalid", Toast.LENGTH_SHORT).show();
                                     }
@@ -118,6 +134,7 @@ public class Verify_Code_Activity extends AppCompatActivity {
     }
 
 
+
     private void createDatabase(){
         FirebaseAuth mAuth =  FirebaseAuth.getInstance();
         FirebaseFirestore dbFireStoreUser = FirebaseFirestore.getInstance();
@@ -131,7 +148,7 @@ public class Verify_Code_Activity extends AppCompatActivity {
         String userID = mAuth.getUid();
 
 
-        UserModel userModel = new UserModel(userName,email,phoneNum,imageUrl,userID,bio,password);
+        UserModel userModel = new UserModel(userName,email,phoneNum,imageUrl,userID,bio,password,0,0,0);
 
         dbSignIn.add(userModel)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

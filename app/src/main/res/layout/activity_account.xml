@@ -106,7 +106,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/bio">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/appCompatTextView9"
+                    android:id="@+id/amount_post"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -117,7 +117,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/appCompatTextView10"
+                    android:id="@+id/amount_follower"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -128,7 +128,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/appCompatTextView11"
+                    android:id="@+id/amount_following"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -148,7 +148,7 @@
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/appCompatTextView9" />
+                    app:layout_constraintTop_toBottomOf="@+id/amount_post" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/appCompatTextView1sdfds"
@@ -157,9 +157,9 @@
                     android:text="Followers"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/appCompatTextView11"
-                    app:layout_constraintStart_toEndOf="@+id/appCompatTextView9"
-                    app:layout_constraintTop_toBottomOf="@+id/appCompatTextView10" />
+                    app:layout_constraintEnd_toStartOf="@+id/amount_following"
+                    app:layout_constraintStart_toEndOf="@+id/amount_post"
+                    app:layout_constraintTop_toBottomOf="@+id/amount_follower" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/appCompatTextView11d"
@@ -170,7 +170,7 @@
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/appCompatTextView11" />
+                    app:layout_constraintTop_toBottomOf="@+id/amount_following" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

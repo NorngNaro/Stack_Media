@@ -8,8 +8,11 @@ public class UserModel {
     private String userID;
     private String bio;
     private String password;
+    private int post;
+    private int following;
+    private int follower;
 
-    public UserModel(String userName, String email, String phone, String imageUrl, String userID, String bio, String password) {
+    public UserModel(String userName, String email, String phone, String imageUrl, String userID, String bio, String password, int post, int following, int follower) {
         this.userName = userName;
         this.email = email;
         this.phone = phone;
@@ -17,6 +20,9 @@ public class UserModel {
         this.userID = userID;
         this.bio = bio;
         this.password = password;
+        this.post = post;
+        this.following = following;
+        this.follower = follower;
     }
 
     public UserModel(){
@@ -77,5 +83,29 @@ public class UserModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getPost() {
+        return post;
+    }
+
+    public void setPost(int post) {
+        this.post = post;
+    }
+
+    public int getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(int following) {
+        this.following = following;
+    }
+
+    public int getFollower() {
+        return follower;
+    }
+
+    public void setFollower(int follower) {
+        this.follower = follower;
     }
 }

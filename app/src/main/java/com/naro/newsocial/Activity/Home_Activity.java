@@ -2,6 +2,8 @@ package com.naro.newsocial.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,7 +55,6 @@ public class Home_Activity extends AppCompatActivity {
         }
 
 
-
     }
 
 
@@ -63,6 +64,7 @@ public class Home_Activity extends AppCompatActivity {
         Log.e("TAG", "Fragemtn"+  getSupportFragmentManager().findFragmentByTag("Account_Fragment"));
 
     }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -98,7 +100,7 @@ public class Home_Activity extends AppCompatActivity {
 
 
     public void changeItemSelect( int index){
-        Log.e("TAG", "changeItemSelect: change item selected " );
+        Log.e("TAG", "changeItemSelect: change item selected " + index);
         bottomNav.getMenu().getItem(index).setChecked(true);
 
     }

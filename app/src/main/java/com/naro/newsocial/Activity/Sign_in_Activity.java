@@ -22,11 +22,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -35,6 +38,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.naro.newsocial.Model.UserModel;
 import com.naro.newsocial.R;
 import com.naro.newsocial.databinding.ActivitySignInBinding;
+
+import java.util.concurrent.TimeUnit;
+
+import static android.content.ContentValues.TAG;
 
 
 public class Sign_in_Activity extends AppCompatActivity {
@@ -206,7 +213,7 @@ public class Sign_in_Activity extends AppCompatActivity {
                 String password = "";
 
 
-                 UserModel userModel = new UserModel(username,email,phone,imageUrl,userID,bio,password);
+                 UserModel userModel = new UserModel(username,email,phone,imageUrl,userID,bio,password,0,0,0);
 
 
         dbSignIn
@@ -292,6 +299,7 @@ public class Sign_in_Activity extends AppCompatActivity {
 
     private void loginClick(){
 
+
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -303,6 +311,7 @@ public class Sign_in_Activity extends AppCompatActivity {
                     binding.inputPassword.setError("Phone is required!");
                 }
                 if (binding.inputPhone.getText().toString().length() != 0 && binding.inputPassword.getText().toString().length() != 0){
+                    binding.progressBar.setVisibility(View.VISIBLE);
                     checkDataUser();
                 }
             }
@@ -328,10 +337,8 @@ public class Sign_in_Activity extends AppCompatActivity {
                                 Log.e(TAG, "Data"+snapshot.getData() );
                                 UserModel userModel = snapshot.toObject(UserModel.class);
                                 if (binding.inputPassword.getText().toString().equals(userModel.getPassword())){
-                                    save_Login();
                                     checkUser = false;
-                                    Intent intent = new Intent(Sign_in_Activity.this ,Home_Activity.class);
-                                    startActivity(intent);
+                                    phoneSignUp();
                                 }else {
                                     binding.inputPassword.setError("Incorrect Password!");
                                 }
@@ -343,5 +350,53 @@ public class Sign_in_Activity extends AppCompatActivity {
                     }
                 });
     }
+
+
+
+    private void phoneSignUp(){
+
+        Log.e(TAG, "phoneSignUp: Work" );
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                spinner + binding.inputPhone.getText().toString(),
+                60, TimeUnit.SECONDS,
+                Sign_in_Activity.this,
+                new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                    @Override
+                    public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+                        binding.progressBar.setVisibility(View.GONE);
+
+                    }
+
+                    @Override
+                    public void onVerificationFailed(@NonNull FirebaseException e) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        Toast.makeText(Sign_in_Activity.this, "Have something went wrong!", Toast.LENGTH_SHORT).show();
+
+                    }
+
+
+                    @Override
+                    public void onCodeSent(@NonNull String verificationID, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        Intent intent = new Intent(Sign_in_Activity.this , Verify_Code_Activity.class);
+                        String phoneNumber = spinner + binding.inputPhone.getText().toString();
+                        intent.putExtra("phoneNumber" , phoneNumber);
+                        intent.putExtra("userName", "null");
+                        intent.putExtra("password" , "null");
+                        intent.putExtra("verificationID" , verificationID);
+                        intent.putExtra("verify","login");
+                        startActivity(intent);
+                    }
+                }
+        );
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        binding.progressBar.setVisibility(View.INVISIBLE);
+    }
+
 
 }

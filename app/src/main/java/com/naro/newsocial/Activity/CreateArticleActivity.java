@@ -21,6 +21,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,10 +34,13 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.naro.newsocial.Model.PostModel;
+import com.naro.newsocial.Model.UserModel;
 import com.naro.newsocial.databinding.ActivityCreateBlogBinding;
 
 import java.time.LocalDateTime;
@@ -51,17 +55,13 @@ public class CreateArticleActivity extends AppCompatActivity {
     ActivityCreateBlogBinding binding;
     private static final int REQUEST_CODE = 1;
     public Uri imageUri;
-    private DatabaseReference mDatabase;
     private String url;
     private String edit;
     private String postID;
     private PostModel postModel;
     private String message;
     private boolean imageEdit = false;
-
-
-
-
+    private  FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,6 @@ public class CreateArticleActivity extends AppCompatActivity {
         }
 
 
-
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,45 +103,96 @@ public class CreateArticleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                 boolean title ;
-                 boolean description ;
-                 boolean image ;
+                if(imageUri != null){
 
-                if(binding.editTitle.getText().toString().equals("")){
-                    Toast.makeText(CreateArticleActivity.this, "Please enter title!", Toast.LENGTH_SHORT).show();
-                    title = false;
-                }else {
-                    title = true;
-                }
-                if(binding.editContent.getText().toString().equals("")) {
-                    Toast.makeText(CreateArticleActivity.this, "Please enter description!", Toast.LENGTH_SHORT).show();
-                    description = false;
-                } else {
-                    description = true;
-                }
+                    boolean title ;
+                    boolean description ;
 
-//                if(binding.imageArticle.getDrawable() == imagedra){
-//                    Toast.makeText(CreateArticleActivity.this, "Please add image!", Toast.LENGTH_SHORT).show();
-//                    image = false;
-//                }else {
-//                    image = true;
-//                }
-
-                if(title && description){
-
-                    if(edit.equals("Edit")){
-                        imageUpload();
-                        update(postID);
-                    }else {
-                        uploadNews();
+                    if(binding.editTitle.getText().toString().equals("")){
+                        Toast.makeText(CreateArticleActivity.this, "Please enter title!", Toast.LENGTH_SHORT).show();
+                        title = false;
+                     }else {
+                        title = true;
+                     }
+                    if(binding.editContent.getText().toString().equals("")) {
+                        Toast.makeText(CreateArticleActivity.this, "Please enter description!", Toast.LENGTH_SHORT).show();
+                        description = false;
+                    } else {
+                        description = true;
                     }
 
+                    if(title && description){
+
+                        if(edit.equals("Edit")){
+                            imageUpload();
+                            update(postID);
+                        }else {
+                            uploadNews();
+                        }
+
+                    }
+
+                }else{
+                    Toast.makeText(CreateArticleActivity.this, "Please in put image!", Toast.LENGTH_SHORT).show();
                 }
+
 
             }
         });
 
     }
+
+    private void userQuery() {
+
+        binding.progressBar.setVisibility(View.VISIBLE);
+        FirebaseFirestore dbFireStoreUser = FirebaseFirestore.getInstance();
+        CollectionReference dbUser = dbFireStoreUser.collection("User");
+
+        dbUser
+                .whereEqualTo("userID", mAuth.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.e(TAG, "user query" );
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+
+                                UserModel userModel = documentSnapshot.toObject(UserModel.class);
+
+                                Log.e(TAG, "getpost"+userModel.getPost() );
+                                updateData(userModel.getPost() , documentSnapshot.getId());
+
+                            }
+                        }
+
+                    }
+                });
+    }
+
+
+    private void updateData(int post , String postID){
+
+
+        Log.e(TAG, "update Data work " );
+        FirebaseFirestore dbFireStore = FirebaseFirestore.getInstance();
+        CollectionReference dbUser = dbFireStore.collection("User");
+
+        int amountPost = post +1;
+        Log.e(TAG, "updateData: "+mAuth.getUid());
+        dbUser.document(postID)
+                .update("post",amountPost)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.e(TAG, "amount post "+ amountPost );
+                        Log.e(TAG, "onComplete: add post amount complete " );
+                    }
+                });
+
+    }
+
+
 
     private void deleteImage(){
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
@@ -155,6 +205,7 @@ public class CreateArticleActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void postQuery(String postID){
 
@@ -188,10 +239,8 @@ public class CreateArticleActivity extends AppCompatActivity {
     }
 
 
-
     private void uploadNews(){
         imageUpload();
-
     }
 
 
@@ -205,10 +254,7 @@ public class CreateArticleActivity extends AppCompatActivity {
 
     private void imageUpload(){
 
-      //  binding.progressBar.setVisibility(View.VISIBLE);
-
         dialog();
-
 
         Log.e(TAG, "imageUpload: "+ imageEdit );
         Log.e(TAG, "imageUpload: "+ edit );
@@ -238,7 +284,6 @@ public class CreateArticleActivity extends AppCompatActivity {
                 });
             }
         }
-
 
     }
 
@@ -279,7 +324,6 @@ public class CreateArticleActivity extends AppCompatActivity {
         FirebaseFirestore dbFireStorePost = FirebaseFirestore.getInstance();
         CollectionReference dbPost = dbFireStorePost.collection("Post");
 
-
                 Log.e("TAG", " onDataChange: " + url );
                 // For date
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -296,6 +340,7 @@ public class CreateArticleActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
+                                userQuery();
                                 Log.d("TAG", "onSuccess: Post Success ");
                                // binding.progressBar.setVisibility(View.INVISIBLE);
                                 Toast.makeText(CreateArticleActivity.this ,"Post Uploaded", Toast.LENGTH_LONG).show();
@@ -345,6 +390,7 @@ public class CreateArticleActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle("")
                 .setMessage(message)
+                .setCancelable(false)
                 .show();
     }
 

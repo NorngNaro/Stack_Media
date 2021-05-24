@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -50,7 +52,7 @@ public class View_Activity extends Activity {
         private boolean create = false;
         private boolean createLove = false;
         private boolean cancelLove = false;
-        private int post_view;
+        private boolean delete = false;
         private int newLove;
     FirebaseFirestore dbFireStore = FirebaseFirestore.getInstance();
 
@@ -81,6 +83,21 @@ public class View_Activity extends Activity {
             imageClick();
 
             checking_love();
+
+
+
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    if(!delete){
+                        checkPostForView();
+                    }
+
+                }
+            }, 5000);
+
 
 
             binding.btnComment.setOnClickListener(new View.OnClickListener() {
@@ -122,8 +139,6 @@ public class View_Activity extends Activity {
                             DocumentSnapshot snapshot = task.getResult();
                             PostModel newPostModel = snapshot.toObject(PostModel.class);
 
-                            addView(newPostModel.getView());
-
                             newLove = newPostModel.getLove();
 
                         }
@@ -131,6 +146,27 @@ public class View_Activity extends Activity {
                 });
     }
 
+
+    private void checkPostForView(){
+        CollectionReference dbView = dbFireStore.collection("Post");
+
+
+        dbView
+                .document(postID)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            DocumentSnapshot snapshot = task.getResult();
+                            PostModel newPostModel = snapshot.toObject(PostModel.class);
+
+                            addView(newPostModel.getView());
+
+                        }
+                    }
+                });
+    }
 
 
         private void addView( int newLove){
@@ -217,7 +253,9 @@ public class View_Activity extends Activity {
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-        checkPost();
+        if (!delete){
+            checkPost();
+        }
 
         FirebaseFirestore dbFireStore = FirebaseFirestore.getInstance();
         CollectionReference dbPost = dbFireStore.collection("Post").document(postID).collection("love");
@@ -248,9 +286,10 @@ public class View_Activity extends Activity {
     }
 
 
+
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         check_love();
     }
 
@@ -284,14 +323,11 @@ public class View_Activity extends Activity {
                     binding.textLove.setText((Integer.parseInt(currentLove) - 1) + "");
                     love = false;
                     cancelLove = true;
-
                 }else {
                     binding.btnLove.setImageResource(R.drawable.loved);
                     binding.textLove.setText((Integer.parseInt(currentLove) + 1) + "");
                     love = true;
                     createLove = true;
-
-
                 }
 
             }
@@ -341,7 +377,6 @@ public class View_Activity extends Activity {
             binding.btnViewDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Search_Activity myblog_activity = new Search_Activity();
 
                     new AlertDialog.Builder(View_Activity.this)
                             .setTitle("Delete this post?")
@@ -352,6 +387,7 @@ public class View_Activity extends Activity {
 
                                     deleteImage(url);
                                     deletePost(postID);
+                                    delete = true;
                                     finish();
 
                                 }

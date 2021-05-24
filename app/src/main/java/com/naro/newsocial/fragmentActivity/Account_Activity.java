@@ -63,12 +63,16 @@ public class Account_Activity extends Fragment {
     private AppCompatImageView setting;
     private UserModel userModel;
     private TextView bio;
+    private TextView post;
+    private TextView follower;
+    private TextView following;
     private View account;
     private SwipeRefreshLayout swipe;
     private ProgressBar progressBar;
     private AppCompatButton editProfile;
     private RecyclerView recyclerView;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Nullable
     @Override
@@ -83,6 +87,9 @@ public class Account_Activity extends Fragment {
         setting = account.findViewById(R.id.btn_setting);
         progressBar = account.findViewById(R.id.progressBar);
         swipe = account.findViewById(R.id.swipe);
+        post = account.findViewById(R.id.amount_post);
+        follower = account.findViewById(R.id.amount_follower);
+        following = account.findViewById(R.id.amount_following);
 
 
         profile();
@@ -103,6 +110,7 @@ public class Account_Activity extends Fragment {
             public void onRefresh() {
                 swipe.setRefreshing(false);
                 setUpRecycler();
+                userQuery(mAuth.getUid());
             }
         });
     }
@@ -165,6 +173,10 @@ public class Account_Activity extends Fragment {
                                     bio.setText(userModel.getBio());
                                 }
 
+                                post.setText(userModel.getPost()+"");
+                                follower.setText(userModel.getFollower()+"");
+                                following.setText(userModel.getFollowing()+"");
+
                                 Glide.with(account)
                                         .load(userModel.getImageUrl())
                                         .into(imageButton);
@@ -180,6 +192,58 @@ public class Account_Activity extends Fragment {
                 });
 
     }
+
+
+
+    private void getUser() {
+
+        FirebaseFirestore dbFireStoreUser = FirebaseFirestore.getInstance();
+        CollectionReference dbUser = dbFireStoreUser.collection("User");
+
+        dbUser
+                .whereEqualTo("userID", mAuth.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.e(TAG, "user query" );
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+
+                                UserModel userModel = documentSnapshot.toObject(UserModel.class);
+
+                                Log.e(TAG, "getpost"+userModel.getPost() );
+                                updateData(userModel.getPost() , documentSnapshot.getId());
+
+                            }
+                        }
+
+                    }
+                });
+    }
+
+
+    private void updateData(int post , String postID){
+
+
+        Log.e(TAG, "update Data work " );
+        FirebaseFirestore dbFireStore = FirebaseFirestore.getInstance();
+        CollectionReference dbUser = dbFireStore.collection("User");
+
+        int amountPost = post -1;
+        Log.e(TAG, "updateData: "+mAuth.getUid());
+        dbUser.document(postID)
+                .update("post",amountPost)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.e(TAG, "amount post "+ amountPost );
+                        Log.e(TAG, "onComplete: add post amount complete " );
+                    }
+                });
+
+    }
+
 
 
     private void setUpRecycler() {
@@ -255,6 +319,7 @@ public class Account_Activity extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
+                                getUser();
                                 postQuery(documentSnapshot.getId(),position);
 
                             }
@@ -308,7 +373,6 @@ public class Account_Activity extends Fragment {
                             if(postModel.getUrl() != null){
                                 deletePost(postID , position);
                                 deleteImage(postModel.getUrl());
-                                setUpRecycler();
                             }
 
                         }else {
@@ -342,8 +406,6 @@ public class Account_Activity extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
-
-
 
                             listAllPost.deleteItem(position);
                             Toast.makeText(getContext(), "Post Deleted", Toast.LENGTH_SHORT).show();
